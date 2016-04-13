@@ -9,6 +9,6 @@ config:
     type: secret
     global: true
   - name: PORT
-    friendly_name: The Wit.ai API Token
-    info: This is the wit api token for your app on wit.ai
+    friendly_name: Port
+    info: Port
     global: true
