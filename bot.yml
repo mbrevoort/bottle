@@ -1,0 +1,14 @@
+name: Bottle
+config:
+  - name: TOKEN
+    friendly_name: Facebook Token
+    type: secret
+    global: true
+  - name: VERIFY_TOKEN
+    friendly_name: Facebook Verify Token
+    type: secret
+    global: true
+  - name: PORT
+    friendly_name: The Wit.ai API Token
+    info: This is the wit api token for your app on wit.ai
+    global: true
