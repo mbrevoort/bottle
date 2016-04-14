@@ -51,8 +51,7 @@ controller.on('facebook_postback', function (bot, message) {
           {
             'title': 'cat',
             'url': 'https:\/\/media.giphy.com\/media\/xT77XZrTKOxycjaYvK\/giphy.gif',
-            'type': 'fallback',
-            'payload': null
+            'type': 'image'
           }
         ]
       })
@@ -60,7 +59,8 @@ controller.on('facebook_postback', function (bot, message) {
     case 'show_dog':
       bot.reply(message, {
         attachment: {
-          'type': 'fallback',
+          'title': 'dog',
+          'type': 'image',
           'url': 'https://media.giphy.com/media/9gn4lhW6wiQ6c/giphy.gif'
         }
       })
