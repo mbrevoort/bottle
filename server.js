@@ -7,7 +7,7 @@ if (!verifyToken) throw new Error('VERIFY_TOKEN is required but missing')
 if (!port) throw new Error('PORT is required but missing')
 
 var Botkit = require('botkit')
-var controller = Botkit.facebookbot({ debug: true, access_token: token, verify_token: verifyToken })
+var controller = Botkit.facebookbot({ debug: false, access_token: token, verify_token: verifyToken })
 var bot = controller.spawn()
 
 controller.setupWebserver(port, function (err, webserver) {
@@ -18,12 +18,5 @@ controller.setupWebserver(port, function (err, webserver) {
 })
 
 controller.hears(['hello', 'hi'], 'message_received', function (bot, message) {
-  controller.storage.users.get(message.user, function (err, user) {
-    if (err) return console.log(err)
-    if (user && user.name) {
-      bot.reply(message, 'Hello ' + user.name + '!!')
-    } else {
-      bot.reply(message, 'Hello.')
-    }
-  })
+  bot.reply(message, 'Hello.')
 })
