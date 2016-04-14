@@ -46,11 +46,11 @@ controller.on('facebook_postback', function (bot, message) {
   switch (message.payload) {
     case 'show_cat':
       bot.reply(message, {
-        'text': 'https://media.giphy.com/media/xT77XZrTKOxycjaYvK/giphy.gif',
+        'text': 'https:\/\/media.giphy.com\/media\/xT77XZrTKOxycjaYvK/giphy.gif',
         'attachments': [
           {
             'title': 'cat',
-            'url': 'https://media.giphy.com/media/xT77XZrTKOxycjaYvK/giphy.gif',
+            'url': 'https:\/\/media.giphy.com\/media\/xT77XZrTKOxycjaYvK\/giphy.gif',
             'type': 'fallback',
             'payload': null
           }
