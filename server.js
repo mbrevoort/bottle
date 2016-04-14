@@ -46,22 +46,21 @@ controller.on('facebook_postback', function (bot, message) {
   switch (message.payload) {
     case 'show_cat':
       bot.reply(message, {
-        'text': 'https:\/\/media.giphy.com\/media\/xT77XZrTKOxycjaYvK/giphy.gif',
-        'attachments': [
-          {
-            'title': 'cat',
-            'url': 'https:\/\/media.giphy.com\/media\/xT77XZrTKOxycjaYvK\/giphy.gif',
-            'type': 'image'
+        attachment: {
+          'type': 'image',
+          'payload': {
+            'url': 'https://media.giphy.com/media/xT77XZrTKOxycjaYvK/giphy.gif'
           }
-        ]
+        }
       })
       break
     case 'show_dog':
       bot.reply(message, {
         attachment: {
-          'title': 'dog',
           'type': 'image',
-          'url': 'https://media.giphy.com/media/9gn4lhW6wiQ6c/giphy.gif'
+          'payload': {
+            'url': 'https://media.giphy.com/media/9gn4lhW6wiQ6c/giphy.gif'
+          }
         }
       })
       break
