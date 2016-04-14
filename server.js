@@ -106,6 +106,7 @@ controller.hears(['flight status'], 'message_received', function (bot, message) 
           }
         }
       })
+      convo.next()
     })
   })
 })
