@@ -47,7 +47,7 @@ controller.on('facebook_postback', function (bot, message) {
     case 'show_cat':
       bot.reply(message, {
         attachment: {
-          'type': 'image',
+          'type': 'fallback',
           'payload': {
             'url': 'https://media.giphy.com/media/xT77XZrTKOxycjaYvK/giphy.gif'
           }
@@ -57,7 +57,7 @@ controller.on('facebook_postback', function (bot, message) {
     case 'show_dog':
       bot.reply(message, {
         attachment: {
-          'type': 'image',
+          'type': 'fallback',
           'payload': {
             'url': 'https://media.giphy.com/media/9gn4lhW6wiQ6c/giphy.gif'
           }
