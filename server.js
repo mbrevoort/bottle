@@ -19,4 +19,50 @@ controller.setupWebserver(port, function (err, webserver) {
 
 controller.hears(['hello', 'hi'], 'message_received', function (bot, message) {
   bot.reply(message, 'Hello.')
+  bot.reply(message, {
+    attachment: {
+      'type': 'template',
+      'payload': {
+        'template_type': 'button',
+        'text': 'What is your fancy?',
+        'buttons': [
+          {
+            'type': 'postback',
+            'title': 'Cats',
+            'payload': 'show_cat'
+          },
+          {
+            'type': 'postback',
+            'title': 'Dogs',
+            'payload': 'show_dog'
+          }
+        ]
+      }
+    }
+  })
+})
+
+controller.on('facebook_postback', function (bot, message) {
+  switch (message.payload) {
+    case 'show_cat':
+      bot.reply(message, {
+        attachment: {
+          'type': 'image',
+          'payload': {
+            'url': 'https://media.giphy.com/media/xT77XZrTKOxycjaYvK/giphy.gif'
+          }
+        }
+      })
+      break
+    case 'show_dog':
+      bot.reply(message, {
+        attachment: {
+          'type': 'image',
+          'payload': {
+            'url': 'https://media.giphy.com/media/9gn4lhW6wiQ6c/giphy.gif'
+          }
+        }
+      })
+      break
+  }
 })
