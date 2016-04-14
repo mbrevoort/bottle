@@ -45,20 +45,10 @@ controller.hears(['hello', 'hi'], 'message_received', function (bot, message) {
 controller.on('facebook_postback', function (bot, message) {
   switch (message.payload) {
     case 'show_cat':
-      bot.reply(message, {
-        attachment: {
-          'type': 'fallback',
-          'url': 'https://media.giphy.com/media/xT77XZrTKOxycjaYvK/giphy.gif'
-        }
-      })
+      bot.reply(message, 'https://media.giphy.com/media/xT77XZrTKOxycjaYvK/giphy.gif')
       break
     case 'show_dog':
-      bot.reply(message, {
-        attachment: {
-          'type': 'fallback',
-          'url': 'https://media.giphy.com/media/9gn4lhW6wiQ6c/giphy.gif'
-        }
-      })
+      bot.reply(message, 'https://media.giphy.com/media/9gn4lhW6wiQ6c/giphy.gif')
       break
   }
 })
