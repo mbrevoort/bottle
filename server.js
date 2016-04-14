@@ -67,20 +67,44 @@ controller.on('facebook_postback', function (bot, message) {
       })
       break
   }
+
+  var obj = JSON.parse(message.payload)
+  if (!obj) return console.log('oh no, invalid payload: ' + message.payload)
+  if (obj.type === 'flight_status') {
+    getFlightStatus(obj.number, function (error, data) {
+      if (error) return bot.reply(message, 'uh oh - ' + error)
+      bot.reply(message, 'There are ' + data[obj.day].flights.length + ' flights ' + obj.day + ' for flight #' + obj.number)
+    })
+  }
 })
 
 controller.hears(['flight status'], 'message_received', function (bot, message) {
   bot.startConversation(message, function (err, convo) {
     if (err) return bot.reply(message, 'uh oh - ' + err)
     convo.ask('Which flight?', function (response, convo) {
-      getFlightStatus(response.text, function (error, data) {
-        if (error) {
-          convo.say('uh oh - ' + error)
-          return convo.next()
-        }
+      var today = { type: 'flight_status', number: parseInt(response.text, 10), day: 'today' }
+      var tomorrow = { type: 'flight_status', number: parseInt(response.text, 10), day: 'tomorrow' }
 
-        convo.say('There are ' + data.today.flights.length + ' flights today')
-        convo.next()
+      convo.say(message, {
+        attachment: {
+          'type': 'template',
+          'payload': {
+            'template_type': 'button',
+            'text': 'What is your fancy?',
+            'buttons': [
+              {
+                'type': 'postback',
+                'title': 'Today',
+                'payload': JSON.stringify(today)
+              },
+              {
+                'type': 'postback',
+                'title': 'Tomorrow',
+                'payload': JSON.stringify(tomorrow)
+              }
+            ]
+          }
+        }
       })
     })
   })
