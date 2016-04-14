@@ -85,12 +85,12 @@ controller.hears(['flight status'], 'message_received', function (bot, message) 
       var today = { type: 'flight_status', number: parseInt(response.text, 10), day: 'today' }
       var tomorrow = { type: 'flight_status', number: parseInt(response.text, 10), day: 'tomorrow' }
 
-      convo.say({
+      bot.reply(message, {
         attachment: {
           'type': 'template',
           'payload': {
             'template_type': 'button',
-            'text': 'What is your fancy?',
+            'text': 'For which day?',
             'buttons': [
               {
                 'type': 'postback',
