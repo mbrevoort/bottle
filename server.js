@@ -48,9 +48,7 @@ controller.on('facebook_postback', function (bot, message) {
       bot.reply(message, {
         attachment: {
           'type': 'fallback',
-          'payload': {
-            'url': 'https://media.giphy.com/media/xT77XZrTKOxycjaYvK/giphy.gif'
-          }
+          'url': 'https://media.giphy.com/media/xT77XZrTKOxycjaYvK/giphy.gif'
         }
       })
       break
@@ -58,9 +56,7 @@ controller.on('facebook_postback', function (bot, message) {
       bot.reply(message, {
         attachment: {
           'type': 'fallback',
-          'payload': {
-            'url': 'https://media.giphy.com/media/9gn4lhW6wiQ6c/giphy.gif'
-          }
+          'url': 'https://media.giphy.com/media/9gn4lhW6wiQ6c/giphy.gif'
         }
       })
       break
