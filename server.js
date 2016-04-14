@@ -73,12 +73,14 @@ controller.on('facebook_postback', function (bot, message) {
   if (obj.type === 'flight_status') {
     getFlightStatus(obj.number, function (error, data) {
       if (error) return bot.reply(message, 'uh oh - ' + error)
-      bot.reply(message, 'There is ' + data[obj.day].flights.length + ' flight ' + obj.day + ' for ' + obj.carrierCode + obj.number)
-      data[obj.day].flights.forEach(function (flight) {
-        bot.reply(message, 'From ' + flight.departureAirportName + ' to ' + flight.arrivalAirportName)
-        if (flight.departureGate) bot.reply(message, 'Departing from gate ' + flight.departureGate)
-        bot.reply(message, 'The flight status is "' + flight.status + '", I hope you know what that means ;)')
-      })
+      bot.reply(message, 'There is ' + data[obj.day].flights.length + ' flight ' + obj.day)
+      setTimeout(function () {
+        data[obj.day].flights.forEach(function (flight) {
+          bot.reply(message, 'From ' + flight.departureAirportName + ' to ' + flight.arrivalAirportName)
+          if (flight.departureGate) bot.reply(message, 'Departing from gate ' + flight.departureGate)
+          bot.reply(message, 'The status for ' + flight.carrierCode + flight.flightNumber + ' is "' + flight.status + '", I hope you know what that means ;)')
+        })
+      }, 50)
     })
   }
 })
