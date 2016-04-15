@@ -1,13 +1,5 @@
 name: Bottle
 config:
-  - name: TOKEN
-    friendly_name: Facebook Token
-    type: secret
-    global: true
-  - name: VERIFY_TOKEN
-    friendly_name: Facebook Verify Token
-    type: secret
-    global: true
   - name: WJ_CLIENT_ID
     friendly_name: WestJet Client ID
     type: secret

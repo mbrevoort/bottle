@@ -1,5 +1,5 @@
-var token = process.env.TOKEN
-var verifyToken = process.env.VERIFY_TOKEN
+var token = process.env.FACEBOOK_PAGE_ACCESS_TOKEN
+var verifyToken = process.env.FACEBOOK_VERIFY_TOKEN
 var port = process.env.PORT
 var clientID = process.env.WJ_CLIENT_ID
 
