@@ -1,6 +1,1 @@
 name: Bottle
-config:
-  - name: WJ_CLIENT_ID
-    friendly_name: WestJet Client ID
-    type: secret
-    global: true

@@ -1,14 +1,12 @@
 var token = process.env.FACEBOOK_PAGE_ACCESS_TOKEN
 var verifyToken = process.env.FACEBOOK_VERIFY_TOKEN
 var port = process.env.PORT
-var clientID = process.env.WJ_CLIENT_ID
 
-if (!token) throw new Error('TOKEN is required but missing')
-if (!verifyToken) throw new Error('VERIFY_TOKEN is required but missing')
+if (!token) throw new Error('FACEBOOK_PAGE_ACCESS_TOKEN is required but missing')
+if (!verifyToken) throw new Error('FACEBOOK_VERIFY_TOKEN is required but missing')
 if (!port) throw new Error('PORT is required but missing')
 
 var Botkit = require('botkit')
-var request = require('request')
 var controller = Botkit.facebookbot({ debug: false, access_token: token, verify_token: verifyToken })
 var bot = controller.spawn()
 
@@ -20,7 +18,8 @@ controller.setupWebserver(port, function (err, webserver) {
 })
 
 controller.hears(['hello', 'hi'], 'message_received', function (bot, message) {
-  bot.reply(message, 'Hello.')
+  bot.reply(message, 'Hello!')
+  bot.reply(message, 'I want to show you something.')
   bot.reply(message, {
     attachment: {
       'type': 'template',
@@ -67,66 +66,4 @@ controller.on('facebook_postback', function (bot, message) {
       })
       break
   }
-
-  var obj = JSON.parse(message.payload)
-  if (!obj) return console.log('oh no, invalid payload: ' + message.payload)
-  if (obj.type === 'flight_status') {
-    getFlightStatus(obj.number, function (error, data) {
-      if (error) return bot.reply(message, 'uh oh - ' + error)
-      bot.reply(message, 'There is ' + data[obj.day].flights.length + ' flight ' + obj.day)
-      setTimeout(function () {
-        data[obj.day].flights.forEach(function (flight) {
-          bot.reply(message, 'From ' + flight.departureAirportName + ' to ' + flight.arrivalAirportName)
-          if (flight.departureGate) bot.reply(message, 'Departing from gate ' + flight.departureGate)
-          bot.reply(message, 'The status for ' + flight.carrierCode + flight.flightNumber + ' is "' + flight.status + '", I hope you know what that means ;)')
-        })
-      }, 50)
-    })
-  }
 })
-
-controller.hears(['flight status'], 'message_received', function (bot, message) {
-  bot.startConversation(message, function (err, convo) {
-    if (err) return bot.reply(message, 'uh oh - ' + err)
-    convo.ask('Which flight?', function (response, convo) {
-      var today = { type: 'flight_status', number: parseInt(response.text, 10), day: 'today' }
-      var tomorrow = { type: 'flight_status', number: parseInt(response.text, 10), day: 'tomorrow' }
-
-      bot.reply(message, {
-        attachment: {
-          'type': 'template',
-          'payload': {
-            'template_type': 'button',
-            'text': 'For which day?',
-            'buttons': [
-              {
-                'type': 'postback',
-                'title': 'Today',
-                'payload': JSON.stringify(today)
-              },
-              {
-                'type': 'postback',
-                'title': 'Tomorrow',
-                'payload': JSON.stringify(tomorrow)
-              }
-            ]
-          }
-        }
-      })
-      convo.next()
-    })
-  })
-})
-
-function getFlightStatus (flightNumber, cb) {
-  request({
-    uri: 'https://api.flightstatus.t.apinp.westjet.com/flightstatus/airportFlightDetails?airportCode=&client_id=' + clientID + '&depOrArv=dep&flightNumber=' + flightNumber + '&language=en',
-    json: true
-  }, function (error, response, body) {
-    if (error) return cb(error)
-    if (response.statusCode !== 200) {
-      return cb(new Error('Unexpected Status Code: ' + response.statusCode))
-    }
-    return cb(null, body)
-  })
-}
