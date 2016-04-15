@@ -9,6 +9,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "botkit": "howdyai/botkit"
+    "botkit": "0.1.1"
   }
 }
